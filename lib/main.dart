@@ -73,32 +73,58 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class HomeContent extends StatelessWidget {
+  final List<Map<String, String>> topApps = [
+    {'title': 'Bitso', 'image': 'app1_image_url'},
+    {'title': 'Binance', 'image': 'app2_image_url'},
+    {'title': 'Facebook', 'image': 'app3_image_url'},
+  
+  ];
+
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
         ListTile(
           title: Text('Top de Apps'),
-          // Agrega la lógica para mostrar el contenido de Top de Apps
         ),
-        ListTile(
-          title: Text('Publicidad'),
-          // Agrega la lógica para mostrar el contenido de Publicidad
+        SizedBox(
+          height: 200,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: topApps.length,
+            itemBuilder: (context, index) {
+              return AppWidget(
+                title: topApps[index]['title']!,
+                image: topApps[index]['image']!,
+              );
+            },
+          ),
         ),
-        ListTile(
-          title: Text('Libros'),
-          // Agrega la lógica para mostrar el contenido de Libros
-        ),
-        ListTile(
-          title: Text('Juegos'),
-          // Agrega la lógica para mostrar el contenido de Juegos
-        ),
-        ListTile(
-          title: Text('Noticias'),
-          // Agrega la lógica para mostrar el contenido de Noticias
-        ),
-        // Puedes agregar más subcategorías según sea necesario
       ],
+    );
+  }
+}
+
+class AppWidget extends StatelessWidget {
+  final String title;
+  final String image;
+
+  AppWidget({required this.title, required this.image});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          CircleAvatar(
+            backgroundImage: NetworkImage(image),
+            radius: 50,
+          ),
+          SizedBox(height: 8),
+          Text(title),
+        ],
+      ),
     );
   }
 }
